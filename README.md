@@ -1,5 +1,20 @@
 # OST Go SDK
 
+<p>
+  <a href="https://github.com/tsirysndr/go-spotify/commits/master">
+    <img src="https://img.shields.io/github/last-commit/tsirysndr/go-spotify.svg" target="_blank" />
+  </a>
+  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/tsirysndr/ost-sdk-go">
+  <img alt="GitHub go.mod Go version" src="https://img.shields.io/github/go-mod/go-version/tsirysndr/ost-sdk-go">
+  <img alt="GitHub closed pull requests" src="https://img.shields.io/github/issues-pr-closed-raw/tsirysndr/ost-sdk-go">
+  <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/tsirysndr/ost-sdk-go">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/tsirysndr/ost-sdk-go">
+  <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/tsirysndr/ost-sdk-go">
+  <a href="https://github.com/tsirysndr/ost-sdk-go/blob/master/LICENSE">
+    <img alt="License: BSD" src="https://img.shields.io/badge/license-MIT-green.svg" target="_blank" />
+  </a>
+</p>
+
 OST Platform SDK for Go
 
 ## Introduction
