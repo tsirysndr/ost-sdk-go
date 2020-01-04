@@ -1,8 +1,8 @@
 # OST Go SDK
 
 <p>
-  <a href="https://github.com/tsirysndr/go-spotify/commits/master">
-    <img src="https://img.shields.io/github/last-commit/tsirysndr/go-spotify.svg" target="_blank" />
+  <a href="https://github.com/tsirysndr/ost-sdk-go/commits/master">
+    <img src="https://img.shields.io/github/last-commit/tsirysndr/ost-sdk-go.svg" target="_blank" />
   </a>
   <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/tsirysndr/ost-sdk-go">
   <img alt="GitHub go.mod Go version" src="https://img.shields.io/github/go-mod/go-version/tsirysndr/ost-sdk-go">
