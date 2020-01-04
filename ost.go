@@ -40,10 +40,10 @@ type Options struct {
 }
 
 type QueryParams struct {
-	ApiKey              string `url:"api_key"`
-	ApiRequestTimestamp int64  `url:"api_request_timestamp"`
-	ApiSignature        string `url:"api_signature"`
-	ApiSignatureKind    string `url:"api_signature_kind"`
+	ApiKey              string `url:"api_key,omitempty"`
+	ApiRequestTimestamp int64  `url:"api_request_timestamp,omitempty"`
+	ApiSignature        string `url:"api_signature,omitempty"`
+	ApiSignatureKind    string `url:"api_signature_kind,omitempty"`
 }
 
 func NewClient(o Options) *Client {
