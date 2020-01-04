@@ -3,6 +3,8 @@ package ost
 import (
 	"fmt"
 	"time"
+
+	"github.com/google/go-querystring/query"
 )
 
 type UsersService service
@@ -49,14 +51,15 @@ func (s *UsersService) Create() (*UserResponse, error) {
 func (s *UsersService) Get(ID string) (*UserResponse, error) {
 	var err error
 	timestamp := time.Now().Unix()
-	resource := fmt.Sprintf("/users/%s?api_key=%s&api_request_timestamp=%d&api_signature_kind=OST1-HMAC-SHA256", ID, s.client.options.ApiKey, timestamp)
-	signature := SignQueryParams(resource, s.client.options.ApiSecret)
 	params := &QueryParams{
 		ApiKey:              s.client.options.ApiKey,
 		ApiRequestTimestamp: timestamp,
 		ApiSignatureKind:    SIGNATURE_KIND,
-		ApiSignature:        signature,
 	}
+	v, _ := query.Values(params)
+	resource := fmt.Sprintf("/users/%s?%s", ID, v.Encode())
+	signature := SignQueryParams(resource, s.client.options.ApiSecret)
+	params.ApiSignature = signature
 	res := new(UserResponse)
 	s.client.base.Path("users/").Get(ID).QueryStruct(params).Receive(res, err)
 	return res, err
@@ -65,15 +68,16 @@ func (s *UsersService) Get(ID string) (*UserResponse, error) {
 func (s *UsersService) GetList() (*UserResponse, error) {
 	var err error
 	timestamp := time.Now().Unix()
-	resource := fmt.Sprintf("/users?api_key=%s&api_request_timestamp=%d&api_signature_kind=OST1-HMAC-SHA256", s.client.options.ApiKey, timestamp)
-	signature := SignQueryParams(resource, s.client.options.ApiSecret)
-	res := new(UserResponse)
 	params := &QueryParams{
 		ApiKey:              s.client.options.ApiKey,
 		ApiRequestTimestamp: timestamp,
 		ApiSignatureKind:    SIGNATURE_KIND,
-		ApiSignature:        signature,
 	}
+	v, _ := query.Values(params)
+	resource := fmt.Sprintf("/users?%s", v.Encode())
+	signature := SignQueryParams(resource, s.client.options.ApiSecret)
+	res := new(UserResponse)
+	params.ApiSignature = signature
 	s.client.base.Get("users").QueryStruct(params).Receive(res, err)
 	return res, err
 }
