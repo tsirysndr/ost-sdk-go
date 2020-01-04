@@ -35,14 +35,15 @@ type Empty struct{}
 func (s *UsersService) Create() (*UserResponse, error) {
 	var err error
 	timestamp := time.Now().Unix()
-	resource := fmt.Sprintf("/users?api_key=%s&api_request_timestamp=%d&api_signature_kind=OST1-HMAC-SHA256", s.client.options.ApiKey, timestamp)
-	signature := SignQueryParams(resource, s.client.options.ApiSecret)
 	params := &QueryParams{
 		ApiKey:              s.client.options.ApiKey,
 		ApiRequestTimestamp: timestamp,
 		ApiSignatureKind:    SIGNATURE_KIND,
-		ApiSignature:        signature,
 	}
+	v, _ := query.Values(params)
+	resource := fmt.Sprintf("/users?%s", v.Encode())
+	signature := SignQueryParams(resource, s.client.options.ApiSecret)
+	params.ApiSignature = signature
 	res := new(UserResponse)
 	s.client.base.Post("users").BodyForm(params).Receive(res, err)
 	return res, err
