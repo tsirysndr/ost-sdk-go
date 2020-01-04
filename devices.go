@@ -22,6 +22,7 @@ type DeviceResponse struct {
 	Success bool `json:"success,omitempty"`
 	Data    *struct {
 		ResultType string   `json:"result_type,omitempty"`
+		Device     *Device  `json:"device,omitempty"`
 		Devices    []Device `json:"devices,omitempty"`
 	} `json:"data,omitempty"`
 }
@@ -30,6 +31,24 @@ type DeviceParams struct {
 	QueryParams
 	Addresses []string `url:"addresses,omitempty"`
 	Limit     int      `url:"limit,omitempty"`
+}
+
+func (s *DevicesService) Get(userID, address string) (*DeviceResponse, error) {
+	var err error
+	timestamp := time.Now().Unix()
+	params := QueryParams{
+		ApiKey:              s.client.options.ApiKey,
+		ApiRequestTimestamp: timestamp,
+		ApiSignatureKind:    SIGNATURE_KIND,
+	}
+	v, _ := query.Values(params)
+	resource := fmt.Sprintf("/users/%s/devices/%s?%s", userID, address, v.Encode())
+	signature := SignQueryParams(resource, s.client.options.ApiSecret)
+	res := new(DeviceResponse)
+	params.ApiSignature = signature
+	device := fmt.Sprintf("users/%s/devices/%s", userID, address)
+	s.client.base.Get(device).QueryStruct(params).Receive(res, err)
+	return res, err
 }
 
 func (s *DevicesService) GetList(userID string, params DeviceParams) (*DeviceResponse, error) {
