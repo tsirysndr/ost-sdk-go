@@ -14,7 +14,7 @@ func main() {
 		ApiSecret: "<YOUR_API_SECRET>",
 	}
 	client := ost.NewClient(options)
-	r, _ := client.Sessions.GetList("b6504ca4-9263-4998-8036-c90e648c48de")
+	r, _ := client.Sessions.GetList("b6504ca4-9263-4998-8036-c90e648c48de", ost.SessionParams{})
 	response, _ := json.Marshal(r)
 	fmt.Println(string(response))
 }

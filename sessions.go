@@ -20,6 +20,12 @@ type Session struct {
 	UpdatedTimestamp          int    `json:"updated_timestamp,omitempty"`
 }
 
+type SessionParams struct {
+	QueryParams
+	Addresses []string `url:"addresses,omitempty"`
+	Limit     int      `url:"limit,omitempty"`
+}
+
 type SessionsResponse struct {
 	Success bool `json:"success,omitempty"`
 	Data    *struct {
@@ -47,14 +53,15 @@ func (s *SessionsService) Get(userID, sessionAddress string) (*SessionsResponse,
 	return res, err
 }
 
-func (s *SessionsService) GetList(userID string) (*SessionsResponse, error) {
+func (s *SessionsService) GetList(userID string, params SessionParams) (*SessionsResponse, error) {
 	var err error
 	timestamp := time.Now().Unix()
-	params := QueryParams{
+	q := QueryParams{
 		ApiKey:              s.client.options.ApiKey,
 		ApiRequestTimestamp: timestamp,
 		ApiSignatureKind:    SIGNATURE_KIND,
 	}
+	params.QueryParams = q
 	v, _ := query.Values(params)
 	resource := fmt.Sprintf("/users/%s/sessions?%s", userID, v.Encode())
 	signature := SignQueryParams(resource, s.client.options.ApiSecret)

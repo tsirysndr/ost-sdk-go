@@ -134,9 +134,9 @@ Currently the following services are supported:
 - [x] Get Device
 - [ ] List Devices in the Economy
 - [x] List Devices of a User
-- [ ] Get Session
+- [x] Get Session
 - [ ] List Sessions in the Economy
-- [ ] List Sessions of a User
+- [x] List Sessions of a User
 - [ ] List All Rules
 - [ ] Get Price Point
 - [ ] Execute Company to User Transaction
