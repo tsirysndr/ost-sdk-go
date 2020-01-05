@@ -130,10 +130,10 @@ Currently the following services are supported:
 - [x] Create User
 - [x] Get User
 - [x] List Users
-- [ ] Register Device
-- [ ] Get Device
+- [x] Register Device
+- [x] Get Device
 - [ ] List Devices in the Economy
-- [ ] List Devices of a User
+- [x] List Devices of a User
 - [ ] Get Session
 - [ ] List Sessions in the Economy
 - [ ] List Sessions of a User
