@@ -46,3 +46,21 @@ func (s *SessionsService) Get(userID, sessionAddress string) (*SessionsResponse,
 	s.client.base.Get(sessions).QueryStruct(params).Receive(res, err)
 	return res, err
 }
+
+func (s *SessionsService) GetList(userID string) (*SessionsResponse, error) {
+	var err error
+	timestamp := time.Now().Unix()
+	params := QueryParams{
+		ApiKey:              s.client.options.ApiKey,
+		ApiRequestTimestamp: timestamp,
+		ApiSignatureKind:    SIGNATURE_KIND,
+	}
+	v, _ := query.Values(params)
+	resource := fmt.Sprintf("/users/%s/sessions?%s", userID, v.Encode())
+	signature := SignQueryParams(resource, s.client.options.ApiSecret)
+	res := new(SessionsResponse)
+	params.ApiSignature = signature
+	sessions := fmt.Sprintf("users/%s/sessions", userID)
+	s.client.base.Get(sessions).QueryStruct(params).Receive(res, err)
+	return res, err
+}
