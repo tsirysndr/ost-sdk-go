@@ -137,7 +137,7 @@ Currently the following services are supported:
 - [x] Get Session
 - [ ] List Sessions in the Economy
 - [x] List Sessions of a User
-- [ ] List All Rules
+- [x] List All Rules
 - [ ] Get Price Point
 - [ ] Execute Company to User Transaction
 - [ ] Get Transaction
