@@ -18,6 +18,12 @@ type Device struct {
 	UpdatedTimestamp int    `json:"updated_timestamp,omitempty"`
 }
 
+type NewDevice struct {
+	QueryParams
+	Address          string `json:"address,omitempty"`
+	ApiSignerAddress string `json:"api_signer_address,omitempty"`
+}
+
 type DeviceResponse struct {
 	Success bool `json:"success,omitempty"`
 	Data    *struct {
@@ -67,5 +73,24 @@ func (s *DevicesService) GetList(userID string, params DeviceParams) (*DeviceRes
 	params.ApiSignature = signature
 	devices := fmt.Sprintf("users/%s/devices", userID)
 	s.client.base.Get(devices).QueryStruct(params).Receive(res, err)
+	return res, err
+}
+
+func (s *DevicesService) Create(userID string, params NewDevice) (*DeviceResponse, error) {
+	var err error
+	timestamp := time.Now().Unix()
+	q := QueryParams{
+		ApiKey:              s.client.options.ApiKey,
+		ApiRequestTimestamp: timestamp,
+		ApiSignatureKind:    SIGNATURE_KIND,
+	}
+	params.QueryParams = q
+	v, _ := query.Values(params)
+	resource := fmt.Sprintf("/users/%s/devices?%s", userID, v.Encode())
+	signature := SignQueryParams(resource, s.client.options.ApiSecret)
+	res := new(DeviceResponse)
+	params.ApiSignature = signature
+	devices := fmt.Sprintf("users/%s/devices", userID)
+	s.client.base.Post(devices).BodyForm(params).Receive(res, err)
 	return res, err
 }
