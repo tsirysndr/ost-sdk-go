@@ -143,7 +143,7 @@ Currently the following services are supported:
 - [ ] Get Transaction
 - [ ] List Transactions in the economy
 - [ ] List Transactions of a user
-- [ ] Get Balance
+- [x] Get Balance
 - [x] Get Token
 - [ ] Get Recovery Owner
 - [ ] Get Chain Information
