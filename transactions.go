@@ -52,6 +52,24 @@ type MetaProperty struct {
 	Details string `json:"details,omitempty"`
 }
 
+func (s *TransactionsService) Get(userID, transactionID string) (*TransactionResponse, error) {
+	var err error
+	timestamp := time.Now().Unix()
+	params := &QueryParams{
+		ApiKey:              s.client.options.ApiKey,
+		ApiRequestTimestamp: timestamp,
+		ApiSignatureKind:    SIGNATURE_KIND,
+	}
+	v, _ := query.Values(params)
+	resource := fmt.Sprintf("/users/%s/transactions/%s?%s", userID, transactionID, v.Encode())
+	signature := SignQueryParams(resource, s.client.options.ApiSecret)
+	params.ApiSignature = signature
+	res := new(TransactionResponse)
+	transaction := fmt.Sprintf("users/%s/transactions/%s", userID, transactionID)
+	s.client.base.Get(transaction).QueryStruct(params).Receive(res, err)
+	return res, err
+}
+
 func (s *TransactionsService) GetList(userID string) (*TransactionResponse, error) {
 	var err error
 	timestamp := time.Now().Unix()
