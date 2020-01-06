@@ -138,13 +138,13 @@ Currently the following services are supported:
 - [ ] List Sessions in the Economy
 - [x] List Sessions of a User
 - [x] List All Rules
-- [ ] Get Price Point
+- [x] Get Price Point
 - [ ] Execute Company to User Transaction
 - [ ] Get Transaction
 - [ ] List Transactions in the economy
 - [ ] List Transactions of a user
 - [ ] Get Balance
-- [ ] Get Token
+- [x] Get Token
 - [ ] Get Recovery Owner
 - [ ] Get Chain Information
 - [ ] Get Device Manager
