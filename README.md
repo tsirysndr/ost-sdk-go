@@ -139,10 +139,10 @@ Currently the following services are supported:
 - [x] List Sessions of a User
 - [x] List All Rules
 - [x] Get Price Point
-- [ ] Execute Company to User Transaction
-- [ ] Get Transaction
+- [x] Execute Company to User Transaction
+- [x] Get Transaction
 - [ ] List Transactions in the economy
-- [ ] List Transactions of a user
+- [x] List Transactions of a user
 - [x] Get Balance
 - [x] Get Token
 - [ ] Get Recovery Owner
