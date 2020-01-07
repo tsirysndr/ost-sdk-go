@@ -37,6 +37,19 @@ type TransactionResponse struct {
 	} `json:"data,omitempty"`
 }
 
+type TransactionParams struct {
+	QueryParams
+	To           string        `url:"to,omitempty"`
+	RawCallData  string        `url:"raw_call_data,omitempty"`
+	MetaProperty *MetaProperty `url:"meta_property,omitempty"`
+}
+
+type MetaProperty struct {
+	Name    string `url:"name,omitempty"`
+	Type    string `url:"type,omitempty"`
+	Details string `url:"details,omitempty"`
+}
+
 type Transfer struct {
 	From       string `json:"from,omitempty"`
 	FromUserID string `json:"from_user_id,omitempty"`
@@ -44,12 +57,6 @@ type Transfer struct {
 	ToUserID   string `json:"to_user_id,omitempty"`
 	Amount     string `json:"amount,omitempty"`
 	Kind       string `json:"kind,omitempty"`
-}
-
-type MetaProperty struct {
-	Name    string `json:"name,omitempty"`
-	Type    string `json:"type,omitempty"`
-	Details string `json:"details,omitempty"`
 }
 
 func (s *TransactionsService) Get(userID, transactionID string) (*TransactionResponse, error) {
@@ -85,5 +92,24 @@ func (s *TransactionsService) GetList(userID string) (*TransactionResponse, erro
 	params.ApiSignature = signature
 	transactions := fmt.Sprintf("users/%s/transactions", userID)
 	s.client.base.Get(transactions).QueryStruct(params).Receive(res, err)
+	return res, err
+}
+
+func (s *TransactionsService) Execute(userID string, params TransactionParams) (*TransactionResponse, error) {
+	var err error
+	timestamp := time.Now().Unix()
+	q := QueryParams{
+		ApiKey:              s.client.options.ApiKey,
+		ApiRequestTimestamp: timestamp,
+		ApiSignatureKind:    SIGNATURE_KIND,
+	}
+	params.QueryParams = q
+	v, _ := query.Values(params)
+	resource := fmt.Sprintf("/users/%s/transactions?%s", userID, v.Encode())
+	signature := SignQueryParams(resource, s.client.options.ApiSecret)
+	params.ApiSignature = signature
+	res := new(TransactionResponse)
+	endpoint := fmt.Sprintf("/users/%s/transactions", userID)
+	s.client.base.Post(endpoint).BodyForm(params).Receive(res, err)
 	return res, err
 }
