@@ -148,7 +148,7 @@ Currently the following services are supported:
 - [ ] Get Recovery Owner
 - [x] Get Chain Information
 - [ ] Get Device Manager
-- [ ] Get Available Base Token
+- [x] Get Available Base Token
 - [ ] Create WebHook
 - [ ] Get WebHook
 - [ ] List WebHooks
