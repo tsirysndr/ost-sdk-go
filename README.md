@@ -145,7 +145,7 @@ Currently the following services are supported:
 - [x] List Transactions of a user
 - [x] Get Balance
 - [x] Get Token
-- [ ] Get Recovery Owner
+- [x] Get Recovery Owner
 - [x] Get Chain Information
 - [ ] Get Device Manager
 - [x] Get Available Base Token
